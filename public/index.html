@@ -31,9 +31,8 @@
 
   <script>
     const token = localStorage.getItem('token');
-    console.log(token);
     if (!token) {
-    window.location.href = '/login'; // Redirige al login si no hay token
+    window.location.href = '/login'; 
     }
   </script>
 

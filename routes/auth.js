@@ -11,7 +11,14 @@ const users = [
   }
 ];
 
-const secretKey = 'mi_clave_secreta';
+function generateSecretKey(length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let secretKey = '';
+  for (let i = 0; i < length; i++) {
+    secretKey += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return secretKey;
+}
 
 router.post('/login', (req, res) => {
   const { username, password } = req.body;
@@ -25,6 +32,8 @@ router.post('/login', (req, res) => {
   if (!passwordIsValid) {
     return res.status(401).json({ error: 'Contraseña incorrecta' });
   }
+
+  let secretKey = generateSecretKey(32);
 
   const token = jwt.sign({ id: user.id }, secretKey, { expiresIn: '1h' });
 
